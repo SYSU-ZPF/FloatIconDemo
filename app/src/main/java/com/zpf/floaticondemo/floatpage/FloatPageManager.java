@@ -115,6 +115,9 @@ public class FloatPageManager {
 
     public boolean setFloatPageBundle(String tag, Bundle bundle){
         BaseFloatPage floatPage = getFloatPage(tag);
+        if (floatPage == null) {
+            return false;
+        }
         floatPage.setBundle(bundle);
         floatPage.afterBundleDataSet();
         return true;

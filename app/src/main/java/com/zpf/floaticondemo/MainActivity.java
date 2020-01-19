@@ -46,10 +46,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button floatIconBtn = findViewById(R.id.float_icon_btn);
-        floatIconBtn.setOnClickListener(this);
-        floatIconBtn.setText("打开浮窗");
         FloatPageManager.getInstance().init(MainActivity.this.getApplicationContext());
+        Button floatIconBtn = findViewById(R.id.float_icon_btn);
+        if (FloatPageManager.getInstance().getFloatPage(FloatIconPage.FLOAT_ICON_PAGE_TAG) != null) {
+            floatIconBtn.setText("关闭浮窗");
+            floatIconVisible = true;
+        }else {
+            floatIconBtn.setText("打开浮窗");
+        }
+        floatIconBtn.setOnClickListener(this);
     }
 
     private void openIcon() {
@@ -70,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 floatIconPage.setOnClickListener(new FloatIconPage.onClickListener() {
                     @Override
                     public void onClick() {
-                        Toast.makeText(MainActivity.this, "You click this!", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(MainActivity.this, MainActivity.class));
                     }
                 });
             }
@@ -83,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void closeIcon() {
         FloatPageManager.getInstance().notifyBackground();
+        FloatPageManager.getInstance().remove(FloatIconPage.FLOAT_ICON_PAGE_TAG);
     }
 
 

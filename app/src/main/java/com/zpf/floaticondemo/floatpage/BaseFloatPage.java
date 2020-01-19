@@ -95,16 +95,18 @@ public abstract class BaseFloatPage {
         return getContext().getString(resId);
     }
 
-    protected abstract void onEnterBackground();  //进入后台回调
-    protected abstract void onEnterForeground();  //进入前台回调
+    protected abstract void onCreate(Context context); //初始化回调
+    protected abstract View onCreateView(Context context, ViewGroup view);
     protected abstract void onViewCreated(View view, PageIntent pageIntent);
+    protected abstract void onLayoutParamsCreated(WindowManager.LayoutParams params);
+
+    protected abstract void onDestroy();
+
+    protected abstract void onEnterBackground();  //隐藏回调
+    protected abstract void onEnterForeground();  //显示回调
     protected abstract void onHomeKeyPress();      //Home键点击回调
     protected abstract void onRecentAppKeyPress();
-    protected abstract void onCreate(Context context); //初始化回调
     protected abstract boolean onBackPressed();        //返回键回调
-    protected abstract View onCreateView(Context context, ViewGroup view);
-    protected abstract void onLayoutParamsCreated(WindowManager.LayoutParams params);
-    protected abstract void onDestroy();
     protected abstract void afterBundleDataSet();
 
 
