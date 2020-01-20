@@ -225,6 +225,7 @@ findProperX为贴边操作，x置零或者为屏幕宽度减去控件宽度，�
         stylusVisible(getLayoutParams().x);
 ```
 
+### 代码：[FloatIconDemo](https://github.com/SYSU-ZPF/FloatIconDemo)
 
 
 
