@@ -1,7 +1,7 @@
 # FloatIconDemo
-一个全局显示的悬浮窗实现，参考[滴滴DoKit]("https://github.com/didi/DoraemonKit")功能入口的悬浮窗代码,加入一些自己的实现。
+一个全局显示的悬浮窗实现，参考[滴滴DoKit](https://github.com/didi/DoraemonKit)功能入口的悬浮窗代码,加入一些自己的实现。
 
-RoundImageView：圆形ImageView 来自 [RoundImageView]("https://github.com/vinc3m1/RoundedImageView")
+RoundImageView：圆形ImageView 来自 [RoundImageView](https://github.com/vinc3m1/RoundedImageView)
 
 RoundProgressBar:展示播放进度的progressBar，来自[hongyangAndroid/Android-ProgressBarWidthNumber](https://github.com/hongyangAndroid/Android-ProgressBarWidthNumber)
 
@@ -176,7 +176,7 @@ notifyBackground() 与 notifyForeground()控制全部浮窗显示隐藏，也可
         break;
 ```
 
-当Event为ACTION_MOVE（移动）
+### 当Event为ACTION_MOVE（移动）
 
 当移动距离小于最小距离如果停止状态不处理。在调用完onMove之后更新last坐标，更新状态
 ```java
@@ -194,7 +194,7 @@ notifyBackground() 与 notifyForeground()控制全部浮窗显示隐藏，也可
         mLastX = x;
         mState = TouchState.STATE_MOVE;
 ```
-当Event为ACTION_UP（手放开）
+### 当Event为ACTION_UP（手放开）
 ```java
         if (mEventListener != null) {
                 mEventListener.onUp(x, y);
@@ -207,15 +207,15 @@ notifyBackground() 与 notifyForeground()控制全部浮窗显示隐藏，也可
 
 调用onUp，此时如果不再移动，且移动时间小于定义的最小间隔时间，执行performClick(),改变状态
 
-onMove(),onUp()实现
-onMove()更新位置
+## onMove(),onUp()实现
+### onMove()更新位置
 ```java
         getLayoutParams().x += dx;
         getLayoutParams().y += dy;
         mWindowManager.updateViewLayout(getRootView(), getLayoutParams());
 ```
 
-onUp()
+### onUp()
 findProperX为贴边操作，x置零或者为屏幕宽度减去控件宽度，保存移动的最后位置
 ```java
         getLayoutParams().x = findProperX(x, getWidth());
