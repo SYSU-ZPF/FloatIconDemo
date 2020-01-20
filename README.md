@@ -5,6 +5,9 @@ RoundImageView：圆形ImageView 来自 [RoundImageView](https://github.com/vinc
 
 RoundProgressBar:展示播放进度的progressBar，来自[hongyangAndroid/Android-ProgressBarWidthNumber](https://github.com/hongyangAndroid/Android-ProgressBarWidthNumber)
 
+
+![Screen record showing UI ](docs/device-2020-01-20-110554~1.gif "screen Record")
+
 ### 代码结构：
 
 BaseFloatPage：悬浮窗基类，整个过程的描述，定义一些虚方法
