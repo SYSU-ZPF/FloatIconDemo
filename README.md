@@ -160,4 +160,74 @@ notifyBackground() 与 notifyForeground()控制全部浮窗显示隐藏，也可
     }
 ```
 
+# 悬浮窗移动 TouchProxy
+
+当Event为ACTION_DOWN（手指放下），保存Start与Last坐标，调用悬浮窗子类实现的onDown虚方法
+```java
+        case MotionEvent.ACTION_DOWN: {
+            mStartX = x;
+            mStartY = y;
+            mLastY = y;
+            mLastX = x;
+            if (mEventListener != null) {
+                mEventListener.onDown(x, y);
+            }
+        }
+        break;
+```
+
+当Event为ACTION_MOVE（移动）
+
+当移动距离小于最小距离如果停止状态不处理。在调用完onMove之后更新last坐标，更新状态
+```java
+        if (Math.abs(x - mStartX) < distance && Math.abs(y - mStartY) < distance) {
+            if (mState == TouchState.STATE_STOP) {
+                break;
+            }
+        } else if (mState != TouchState.STATE_MOVE){
+            mState = TouchState.STATE_MOVE;
+        }
+        if (mEventListener != null) {
+            mEventListener.onMove(mLastX, mLastY, x - mLastX, y - mLastY);
+        }
+        mLastY = y;
+        mLastX = x;
+        mState = TouchState.STATE_MOVE;
+```
+当Event为ACTION_UP（手放开）
+```java
+        if (mEventListener != null) {
+                mEventListener.onUp(x, y);
+            }
+            if (mState != TouchState.STATE_MOVE &&event.getEventTime()-event.getDownTime()<MIN_TAP_TIME) {
+                v.performClick();
+            }
+            mState = TouchState.STATE_STOP;
+```
+
+调用onUp，此时如果不再移动，且移动时间小于定义的最小间隔时间，执行performClick(),改变状态
+
+onMove(),onUp()实现
+onMove()更新位置
+```java
+        getLayoutParams().x += dx;
+        getLayoutParams().y += dy;
+        mWindowManager.updateViewLayout(getRootView(), getLayoutParams());
+```
+
+onUp()
+findProperX为贴边操作，x置零或者为屏幕宽度减去控件宽度，保存移动的最后位置
+```java
+        getLayoutParams().x = findProperX(x, getWidth());
+        mWindowManager.updateViewLayout(getRootView(), getLayoutParams());
+        FloatIconConfig.saveLastPosX(mContext,getLayoutParams().x);
+        FloatIconConfig.saveLastPosY(mContext,getLayoutParams().y);
+        stylusVisible(getLayoutParams().x);
+```
+
+
+
+
+
+
 
